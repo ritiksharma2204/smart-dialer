@@ -73,18 +73,21 @@ This gives us the utilization benefit of predictive dialing while retaining the 
                 Event Processor
                        |
                        v
-                   PostgreSQL
+  
+                 PostgreSQL
+----
 ## Verification & Results
 
 The prototype was verified locally with the following checks.
 
+----
 ### Automated Test Suite
 
 The complete pytest suite passes:
 
 ```text
 65 passed in 0.73s
-
+-----
 ### Predictive Pacing Simulation
 Run:
 python scripts/simulate.py
@@ -108,11 +111,13 @@ A local run produced the following results:
 - **Scenario D:** Provider degradation causes predictive dialing to stop and the system requests progressive fallback.
 - The Safety Controller therefore acts as the hard boundary regardless of the pacing recommendation.
 
+-----
 ### HTTP Smoke Test
 
 HTTP/1.1 200 OK
 {"status":"ok"}
 
+-----
 ### k6 Load Test
 Run:
 k6 run \
