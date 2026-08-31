@@ -29,7 +29,6 @@ The system models a real outbound calling platform with:
 The primary design goal is not simply to place calls, but to ensure that
 **predictive dialing never bypasses safety and concurrency guarantees.**
 
----
 ## Design Answer
 
 Use predictive pacing to estimate how many calls are needed to keep agents utilized, based on answer rate, agent availability, ringing calls, and talk time.
@@ -38,7 +37,7 @@ However, the prediction never directly places calls. Every request passes throug
 
 This gives us the utilization benefit of predictive dialing while retaining the hard safety and concurrency guarantees of progressive dialing. If the provider becomes unhealthy, predictive dialing stops and the system falls back to progressive dialing.
 
----
+
 ## Architecture
 
 ```text
@@ -75,19 +74,19 @@ This gives us the utilization benefit of predictive dialing while retaining the 
                        v
   
                  PostgreSQL
-----
+```
+
 ## Verification & Results
 
 The prototype was verified locally with the following checks.
 
-----
 ### Automated Test Suite
 
 The complete pytest suite passes:
 
 ```text
 65 passed in 0.73s
------
+```
 ### Predictive Pacing Simulation
 Run:
 python scripts/simulate.py
@@ -111,13 +110,11 @@ A local run produced the following results:
 - **Scenario D:** Provider degradation causes predictive dialing to stop and the system requests progressive fallback.
 - The Safety Controller therefore acts as the hard boundary regardless of the pacing recommendation.
 
------
 ### HTTP Smoke Test
 
 HTTP/1.1 200 OK
 {"status":"ok"}
 
------
 ### k6 Load Test
 Run:
 k6 run \
