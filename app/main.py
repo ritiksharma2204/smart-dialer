@@ -1,12 +1,14 @@
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
-from app.database import get_db
-from app.models.campaign import Campaign
+from app.database import Base, engine, get_db
+from app.models import Agent, Borrower, Call, Campaign, ProviderEvent  # noqa: F401
 from app.services.dialer import SmartDialer
 from app.services.pacing_engine import PacingMetrics, PredictivePacingEngine
 from app.services.safety_controller import SafetyController
 
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Smart Dialer")
 

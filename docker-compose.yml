@@ -1,20 +1,24 @@
 services:
-  postgres:
+  db:
     image: postgres:16
-    container_name: smart-dialer-postgres
     environment:
-      POSTGRES_USER: dialer
-      POSTGRES_PASSWORD: dialer
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: smart_dialer
     ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - "5433:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U dialer -d smart_dialer"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d smart_dialer"]
       interval: 5s
       timeout: 5s
       retries: 5
 
-volumes:
-  postgres_data:
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/smart_dialer
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
