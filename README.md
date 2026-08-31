@@ -21,10 +21,13 @@ The system models a real outbound calling platform with:
 - Failure simulation
 - Metrics collection
 - Scenario-based testing
+- PostgreSQL persistence
+- Dockerized application and database
+- Automated pytest CI
 - k6 load testing
 
 The primary design goal is not simply to place calls, but to ensure that
-**predictive dialing never bypasses safety and concurrency guarantees**.
+**predictive dialing never bypasses safety and concurrency guarantees.**
 
 ---
 
